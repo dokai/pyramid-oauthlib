@@ -181,7 +181,7 @@ def duplicate_params(request):
 
 def oauth_response(result):
     headers, body, status = result
-    return Response(body=body, status=status, headers={
+    return Response(body=body, status=status, charset='utf-8', headers={
         native_(name, encoding='latin-1'): native_(value, encoding='latin-1')
         for name, value
         in headers.items()
