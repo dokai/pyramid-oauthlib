@@ -181,11 +181,13 @@ def duplicate_params(request):
 
 def oauth_response(result):
     headers, body, status = result
-    return Response(body=body, status=status, charset='utf-8', headers={
-        native_(name, encoding='latin-1'): native_(value, encoding='latin-1')
+    headerlist = headers.items() if hasattr(headers, 'items') else headers
+
+    return Response(body=body, status=status, charset='utf-8', headerlist=[
+        (native_(name, encoding='latin-1'), native_(value, encoding='latin-1'))
         for name, value
-        in headers.items()
-    })
+        in headerlist
+    ])
 
 
 def register(config, server):
